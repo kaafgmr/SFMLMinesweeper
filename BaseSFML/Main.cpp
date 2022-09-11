@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <iostream>
 #include "Board.hpp"
 
@@ -30,6 +31,13 @@ bool clickedRight(sf::Event event)
     return lockedRight;
 }
 
+void DrawGame(sf::RenderWindow &window, Board *board, std::vector<std::vector<Block*>> &grid, int &NumOfBlocks)
+{
+    window.clear(sf::Color::Black);
+    board->Draw(grid, NumOfBlocks, window);
+    window.display();
+}
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Minimalist Minesweeper", sf::Style::Titlebar);
@@ -54,9 +62,11 @@ int main()
     board->CountNeighbours(grid, NumOfBlocks);
 
     sf::Event event;
+    DrawGame(window, board, grid, NumOfBlocks);
+    
     while (window.isOpen())
     {
-        sf::Clock time;
+        //sf::Clock time;
 
         while (window.pollEvent(event))
         {
@@ -68,22 +78,20 @@ int main()
             {
                 //update
                 board->Update(grid, NumOfBlocks, window,true);
+                
+                //draw
+                DrawGame(window, board, grid, NumOfBlocks);
             }
             if (clickedRight(event))
             {
                 board->Update(grid, NumOfBlocks, window, false);
+                
+                //draw
+                DrawGame(window, board, grid, NumOfBlocks);
             }
-
         }
 
-        //draw
-        window.clear(sf::Color::Black);
-
-        board->Draw(grid, NumOfBlocks, window);
-
-        window.display();
-
-        float FPS = 1.0f / time.restart().asSeconds();
+        //float FPS = 1.0f / time.restart().asSeconds();
         //std::cout << "FPS: " << FPS << std::endl;
     }
 
