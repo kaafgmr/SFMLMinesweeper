@@ -9,3 +9,6 @@ you can play it by downloading it in the release page
 3. Right click to mark as bomb.
 
 you win when all bombs are flagged and all tiles are open
+
+## Showcase
+![](https://github.com/kaafgmr/SFMLMinesweeper/blob/master/Github/Showcase.gif)
